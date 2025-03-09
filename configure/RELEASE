@@ -33,7 +33,6 @@
 #SNCSEQ = $(MODULES)/seq-ver
 
 # EPICS_BASE should appear last so earlier modules can override stuff:
-EPICS_BASE = /media/BigDrive/Projects/epics/base
 
 # Set RULES here if you want to use build rules from somewhere
 # other than EPICS_BASE:
@@ -44,3 +43,6 @@ EPICS_BASE = /media/BigDrive/Projects/epics/base
 -include $(TOP)/../RELEASE.local
 -include $(TOP)/../RELEASE.$(EPICS_HOST_ARCH).local
 -include $(TOP)/configure/RELEASE.local
+
+-include $(TOP)/../../RELEASE_SITE
+-include $(TOP)/RELEASE_SITE
