@@ -20,7 +20,7 @@ LIBRARY_IOC += tempMon
 DBD += tempMon.dbd
 
 # specify all source files to be compiled and added to the library
-#tempMon_SRCS += xxx
+tempMon_SRCS += tempMon.c
 
 tempMon_LIBS += $(EPICS_BASE_IOC_LIBS)
 

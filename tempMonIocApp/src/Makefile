@@ -19,6 +19,9 @@ DBD += tempMonIoc.dbd
 # tempMonIoc.dbd will be made up from these files:
 tempMonIoc_DBD += base.dbd
 
+# Add the temperature monitor DBD file
+tempMonIoc_DBD += tempMon.dbd
+
 # Include dbd files from all support applications:
 #tempMonIoc_DBD += xxx.dbd
 
@@ -34,6 +37,9 @@ tempMonIoc_SRCS_vxWorks += -nil-
 
 # Add support from base/src/vxWorks if needed
 #tempMonIoc_OBJS_vxWorks += $(EPICS_BASE_BIN)/vxComLibrary
+
+# Link in our device support
+tempMonIoc_LIBS += tempMon
 
 # Finally link to the EPICS Base libraries
 tempMonIoc_LIBS += $(EPICS_BASE_IOC_LIBS)

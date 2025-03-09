@@ -8,3 +8,5 @@
 #driver(myDriver)
 #registrar(myRegistrar)
 #variable(myVariable)
+
+device(ai, INST_IO, devTempMon, "devTempMon")

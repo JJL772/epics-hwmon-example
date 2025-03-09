@@ -1,0 +1,108 @@
+
+# CPU core temperature in sane units (C)
+record(ai, "$(P)CPU_TEMP") {
+    # Short description of the record (this must be <40 chars)
+    field(DESC, "CPU core temp, in deg. C")
+
+    # Device type; this corresponds to the device type that we declared in tempMon.dbd
+    # This ultimately causes EPICS to call our device support routines
+    field(DTYP, "devTempMon")
+
+    # Read a new value off of sysfs every 100ms. This is the fastest supported scan rate,
+    # however other methods of scanning can be used too. "I/O Intr" allows software driven
+    # reads to be triggered
+    field(SCAN, ".1 second")
+
+    # This is an INST_IO input link, which is parsed by our device support routines
+    # see temp_init
+    field(INP, "@CPU_TEMP")
+
+    # --- Alarm Parameters ---
+    
+    # When this value is exceeded, an alarm will be set (See HSV for severity)
+    field(HIGH, "80")
+    field(HSV, "MINOR")
+    
+    # When this value is exceeded, an alarm will also be set (See HHSV for severity)
+    field(HIHI, "95")
+    field(HHSV, "MAJOR")
+
+    # --- Linear Conversion Parameters ---
+
+    # Use linear conversions
+    # The equation for this is: VAL = ESLO * VAL + EOFF
+    field(LINR, "LINEAR")
+
+    # Raw value is in mC, so our slope should be 1/1000
+    field(ESLO, "0.001")
+
+    # Display parameters
+    field(EGU, "C")
+}
+
+# CPU core temperature in F. This will make use of the special_linconv device support routine
+record(ai, "$(P)CPU_TEMPF") {
+    field(DESC, "CPU core temp, in deg. F")
+    field(DTYP, "devTempMon")
+    field(SCAN, ".1 second")
+    field(INP,  "@CPU_TEMP")
+    
+    # --- Alarm Parameters ---
+    
+    # Same settings as CPU_TEMP, but in fahrenheit 
+    field(HIGH, "176")
+    field(HSV, "MINOR")
+
+    field(HIHI, "203")
+    field(HHSV, "MAJOR")
+    
+    # --- Linear Conversion Parameters ---
+
+    # Use linear conversions
+    field(LINR, "LINEAR")
+
+    # Fahrenheit is given by:
+    #  F = C * (9/5) + 32
+    # Since RVAL (raw value) is in mC, this becomes:
+    #  F = 0.001 * C * (9/5) + 32
+    # ESLO is slope, which is 0.001 * (9/5) =
+    field(ESLO, "0.0018")
+
+    # Second part of the equation is + 32. This is our EOFF (EGU offset)
+    field(EOFF, "32")
+
+    # Display parameters
+    field(EGU, "F")
+}
+
+# Max CPU core temperature, if supported. This is a constant value we only read once
+record(ai, "$(P)CPU_MAX_TEMP") {
+    field(DESC, "Nax CPU core temp")
+    field(DTYP, "devTempMon")
+    field(INP, "@CPU_MAX_TEMP")
+
+    # Process this record right after IOC init, we only need to do this once since it's a constant
+    field(PINI, "YES")
+
+    # Same settings as CPU_TEMP
+    field(ESLO, "0.001")
+    field(LINR, "LINEAR")
+    field(EGU, "C")
+}
+
+# Critical CPU core temperature, if supported. This is a constant value we only read once
+record(ai, "$(P)CPU_CRIT_TEMP") {
+    field(DESC, "Nax CPU core temp")
+    field(SCAN, "Passive")
+    field(DTYP, "devTempMon")
+    field(INP, "@CPU_CRIT_TEMP")
+
+    # Process this record right after IOC init, we only need to do this once since it's a constant
+    field(PINI, "YES")
+
+    # Same settings as CPU_TEMP
+    field(ESLO, "0.001")
+    field(LINR, "LINEAR")
+    field(EGU, "C")
+}
+
