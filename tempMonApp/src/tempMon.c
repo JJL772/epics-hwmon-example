@@ -96,7 +96,9 @@ epicsExportAddress(dset, devTempMon);
  *****************************************************************************/
 
 /**
- * Generate some output when
+ * Generate some output when dumping EPICS device support info.
+ * This isn't really needed for this device support module. You can set this to
+ * NULL in the dset struct too.
  */
 static long
 temp_report(int level)
