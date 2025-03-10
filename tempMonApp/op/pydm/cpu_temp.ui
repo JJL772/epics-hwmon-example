@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="PyDMFrame" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Max Temp:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Crit Temp:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Temp:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="PyDMLineEdit" name="PyDMLineEdit">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${P}CPU_TEMP</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="PyDMLineEdit" name="PyDMLineEdit_2">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${P}CPU_MAX_TEMP</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="PyDMLineEdit" name="PyDMLineEdit_3">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="readOnly">
+      <bool>true</bool>
+     </property>
+     <property name="showUnits" stdset="0">
+      <bool>true</bool>
+     </property>
+     <property name="channel" stdset="0">
+      <string>ca://${P}CPU_CRIT_TEMP</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="6">
+    <widget class="PyDMTimePlot" name="PyDMTimePlot">
+     <property name="toolTip">
+      <string/>
+     </property>
+     <property name="yAxes">
+      <stringlist>
+       <string>{&quot;name&quot;: &quot;Axis 1&quot;, &quot;orientation&quot;: &quot;left&quot;, &quot;label&quot;: null, &quot;minRange&quot;: 10.0, &quot;maxRange&quot;: 110.0, &quot;autoRange&quot;: true, &quot;logMode&quot;: false}</string>
+       <string>{&quot;name&quot;: &quot;Temperature (C)&quot;, &quot;orientation&quot;: &quot;left&quot;, &quot;label&quot;: null, &quot;minRange&quot;: 10.0, &quot;maxRange&quot;: 110.0, &quot;autoRange&quot;: true, &quot;logMode&quot;: false}</string>
+      </stringlist>
+     </property>
+     <property name="curves">
+      <stringlist>
+       <string>{&quot;channel&quot;: &quot;ca://${P}CPU_TEMP&quot;, &quot;plot_style&quot;: null, &quot;name&quot;: &quot;CPU Temp (C)&quot;, &quot;color&quot;: &quot;white&quot;, &quot;lineStyle&quot;: 1, &quot;lineWidth&quot;: 1, &quot;symbol&quot;: null, &quot;symbolSize&quot;: 10, &quot;yAxisName&quot;: &quot;Temperature (C)&quot;, &quot;barWidth&quot;: null, &quot;upperThreshold&quot;: null, &quot;lowerThreshold&quot;: null, &quot;thresholdColor&quot;: &quot;white&quot;}</string>
+      </stringlist>
+     </property>
+     <property name="timeSpan">
+      <double>300.000000000000000</double>
+     </property>
+     <property name="updateInterval">
+      <double>0.500000000000000</double>
+     </property>
+     <property name="autoRangeY">
+      <bool>false</bool>
+     </property>
+     <property name="minYRange">
+      <double>10.000000000000000</double>
+     </property>
+     <property name="maxYRange">
+      <double>110.000000000000000</double>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PyDMTimePlot</class>
+   <extends>QGraphicsView</extends>
+   <header>pydm.widgets.timeplot</header>
+  </customwidget>
+  <customwidget>
+   <class>PyDMFrame</class>
+   <extends>QFrame</extends>
+   <header>pydm.widgets.frame</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>PyDMLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>pydm.widgets.line_edit</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
