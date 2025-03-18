@@ -1,7 +1,3 @@
-# SPDX-FileCopyrightText: 1997 Argonne National Laboratory
-#
-# SPDX-License-Identifier: EPICS
-
 # Makefile at top of application tree
 TOP = .
 include $(TOP)/configure/CONFIG
@@ -12,11 +8,6 @@ DIRS += $(wildcard *Sup)
 DIRS += $(wildcard *App)
 DIRS += $(wildcard *Top)
 DIRS += $(wildcard iocBoot)
-
-ifeq ($(BUILD_IOCS),YES)
-DIRS := $(DIRS) $(filter-out $(DIRS), $(wildcard iocs))
-iocs_DEPEND_DIRS += $(wildcard *App)
-endif
 
 # The build order is controlled by these dependency rules:
 
@@ -38,3 +29,4 @@ iocBoot_DEPEND_DIRS += $(filter %App,$(DIRS))
 # Add any additional dependency rules here:
 
 include $(TOP)/configure/RULES_TOP
+
