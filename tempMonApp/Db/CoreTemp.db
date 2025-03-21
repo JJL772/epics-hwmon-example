@@ -29,9 +29,9 @@ record(ai, "$(P)CPU_TEMP") {
 
     # --- Linear Conversion Parameters ---
 
-    # Use linear conversions
+    # Use linear conversions with explicit slope
     # The equation for this is: VAL = ESLO * VAL + EOFF
-    field(LINR, "LINEAR")
+    field(LINR, "SLOPE")
 
     # Raw value is in mC, so our slope should be 1/1000
     field(ESLO, "0.001")
@@ -58,8 +58,8 @@ record(ai, "$(P)CPU_TEMPF") {
     
     # --- Linear Conversion Parameters ---
 
-    # Use linear conversions
-    field(LINR, "LINEAR")
+    # Use linear conversions with explicit slope
+    field(LINR, "SLOPE")
 
     # Fahrenheit is given by:
     #  F = C * (9/5) + 32
@@ -86,7 +86,7 @@ record(ai, "$(P)CPU_MAX_TEMP") {
 
     # Same settings as CPU_TEMP
     field(ESLO, "0.001")
-    field(LINR, "LINEAR")
+    field(LINR, "SLOPE")
     field(EGU, "C")
 }
 
@@ -102,7 +102,7 @@ record(ai, "$(P)CPU_CRIT_TEMP") {
 
     # Same settings as CPU_TEMP
     field(ESLO, "0.001")
-    field(LINR, "LINEAR")
+    field(LINR, "SLOPE")
     field(EGU, "C")
 }
 
