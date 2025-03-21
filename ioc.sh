@@ -2,7 +2,7 @@
 set -e
 
 cd "$(dirname "${BASH_SOURCE[0]}")"
-cd iocBoot/sioc-temp-mon-test
+cd iocs/tempMonExampleIoc/iocBoot/sioc-temp-mon-test
 
 if [ -z "$EPICS_HOST_ARCH" ]; then
     echo "EPICS_HOST_ARCH not defined :("
