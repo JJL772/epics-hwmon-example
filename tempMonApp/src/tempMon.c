@@ -17,10 +17,13 @@
 #include <dbCommon.h>
 #include <recGbl.h>
 #include <alarm.h>
+#include <iocsh.h>
 
 /******************************************************************************
  * Hardware Interface Decls
  *****************************************************************************/
+
+const char* hwmon_type = "none";
 
 /** hwmon state, may be shared between records */
 struct temp_state {
@@ -264,6 +267,8 @@ ops_init(struct temp_ops** out_ops)
 
   ops->state.mutex = epicsMutexMustCreate();
 
+  hwmon_type = ops->type;
+
   /** Run the hwmon-specific init code for the hwmon instance we found */
   return ops->init(i, &ops->state);
 }
@@ -405,3 +410,57 @@ cpu_thermal_init(int hwmon_inst, struct temp_state* state)
   state->fd = open(file, O_RDONLY);
   return state->fd < 0 ? -1 : 0;
 }
+
+/******************************************************************************
+ * IOC shell function registration
+ *****************************************************************************/
+
+static void
+hwmonStatusCallFunc(const iocshArgBuf* args)
+{
+  /** Caller wants us to re-index all hwmon types */
+  if (args[0].ival != 0) {
+    printf("Available hwmon sensors:\n");
+
+    /** Loop through all hwmon types and read their type */
+    for (int i = 0; i < 99; ++i) {
+      char buf[128];
+      snprintf(buf, sizeof(buf), "/sys/class/hwmon/hwmon%d/name", i);
+      int fd = open(buf, O_RDONLY);
+      if (fd < 0)
+        break;
+
+      char name[128];
+      ssize_t l = 0;
+      if ((l = read(fd, name, sizeof(name)-1)) <= 0) {
+        close(fd);
+        continue;
+      }
+      name[l] = 0;
+      close(fd);
+
+      printf(" %s", name);
+    }
+    return;
+  }
+
+  /** Otherwise just report on what's being used */
+  printf("hwmon type: %s\n", hwmon_type);
+}
+
+/** This is defined as a "registrar" in the dbd file. It will be called when
+  * registerRecordDeviceDriver is, before iocBoot.
+  */ 
+void
+tempMonRegister()
+{
+  /* hwmonStatus */
+  {
+    static const iocshArg arg0 = {"bReIndex", iocshArgInt};
+    static const iocshArg* args[] = {&arg0};
+    static const iocshFuncDef func = {"hwmonStatus", 1, args};
+    iocshRegister(&func, hwmonStatusCallFunc);
+  }
+}
+
+epicsExportRegistrar(tempMonRegister);

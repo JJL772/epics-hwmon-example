@@ -10,3 +10,6 @@
 #variable(myVariable)
 
 device(ai, INST_IO, devTempMon, "devTempMon")
+
+# This function will be called at IOC init. We will use it to register iocsh functions
+registrar(tempMonRegister)
